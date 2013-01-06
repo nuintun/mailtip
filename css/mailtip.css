@@ -1,0 +1,30 @@
+ul.mailtip {
+    float: none;
+    background-color: #fcfeff;
+    list-style: none;
+    border: 1px solid #97bccc;
+    border-radius: 0px 0px 10px 10px;
+    overflow: hidden;
+    border-top: none;
+}
+
+ul.mailtip li p {
+    line-height: 30px;
+    cursor: pointer;
+    margin: 0 9px;
+    overflow: hidden;
+    word-wrap: break-word;
+    height: 30px;
+}
+
+ul.mailtip li:last-child {
+    border-radius: 0px 0px 10px 10px;
+}
+
+ul.mailtip li.active {
+    background: #eaeaea;
+}
+
+ul.mailtip li.hover {
+    background: #e7f6ff;
+}
