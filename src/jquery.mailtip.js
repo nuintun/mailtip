@@ -11,7 +11,7 @@
  * });
  * css style
  * ul.mailtip{float: none;background-color: #fcfeff;list-style: none;border:1px solid #97bccc;border-radius: 0px 0px 10px 10px;overflow: hidden; border-top: none;}
- * ul.mailtip li p{line-height: 30px;cursor: pointer; margin: 0 9px; overflow: hidden; word-wrap: break-word; height: 30px;}
+ * ul.mailtip li p{text-align: left;line-height: 30px;cursor: pointer; margin: 0 9px; overflow: hidden; word-wrap: break-word; height: 30px;}
  * ul.mailtip li:last-child{border-radius: 0px 0px 10px 10px;}
  * ul.mailtip li.active{background: #eaeaea;}
  * ul.mailtip li.hover{background: #e7f6ff;}
@@ -162,11 +162,16 @@
             //初始提示框
             var tip = createTip(input, config);
 
-            //绑定keyup事件
+            //绑定事件
             input.bind('keydown input propertychange', function (e){
                 if (e.type === 'keydown') {
                     //根据按键执行不同操作
                     switch (e.keyCode) {
+                        //退格键
+                        case 8:
+                            //妹哦！IE9以上input事件有BUG,退格键不会触发input事件，所以就有了这个hack！
+                            if ($.browser.msie && $.browser.version >= 9) input.trigger('input');
+                            break;
                         case 9:
                             tip.hide();
                             break;
