@@ -1,4 +1,4 @@
 mailtip
 =======
 
-a jQuery mail autocomplete plugins.
+A jQuery mail autocomplete plugin.
