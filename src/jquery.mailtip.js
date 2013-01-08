@@ -155,6 +155,7 @@
         config.width = typeof config.width === 'number' ? config.width : defaults.width;
         config.offsettop = typeof config.offsettop === 'number' ? config.offsettop : defaults.offsettop;
         config.offsetleft = typeof config.offsetleft === 'number' ? config.offsetleft : defaults.offsetleft;
+        config.zindex = typeof config.zindex === 'number' ? config.zindex : defaults.zindex;
 
         return this.each(function (){
             //缓存当前输入框对象
