@@ -18,7 +18,8 @@
  */
 (function ($){
     //探测oninput事件支持
-    var hasInputEvent = 'oninput' in document.createElement('input');
+    var hasInputEvent = 'oninput' in document.createElement('input'),
+        ISIE9 = /MSIE 9.0;/i.test(navigator.appVersion || '');
     //字符串转正则函数
     function parseRegExp(pattern, attributes){
         var imp = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/igm;
@@ -204,6 +205,11 @@
                         toggleTip(input.val(), tip, config.mails);
                     }
                 }
+            });
+            
+            //妹哦！IE9以上input事件有BUG,退格键不会触发input事件，所以就有了这个hack！
+            ISIE9 && input.on('keyup', function (e){
+                e.keyCode === 8 && toggleTip(input.val(), tip, config.mails);
             });
         });
     };
