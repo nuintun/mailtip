@@ -126,7 +126,7 @@
     //展示隐藏提示
     var toggleTip = function (val, tip, mails){
         //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
-        if (!val || /[,]|[\u4e00-\u9fa5]|\s|^@/.test(val) | val.split('@').length > 2) {
+        if (!val || /[,]|[\u4e00-\u9fa5]|\s|^@/.test(val) || val.split('@').length > 2) {
             tip.hide();
         } else {
             var lists = createLists(val, mails);
