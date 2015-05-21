@@ -6,7 +6,7 @@ ul.mailtip {
   border-radius: 0px 0px 5px 5px;
   overflow: hidden;
   border-top: none;
-  font: 12px/1.5 Microsoft Yahei, SimSun, sans-serif;
+  font: 12px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
 ul.mailtip li p {
   text-align: left;
