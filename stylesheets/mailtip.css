@@ -10,12 +10,12 @@ ul.mailtip {
 }
 ul.mailtip li p {
   text-align: left;
-  line-height: 30px;
+  line-height: 28px;
   cursor: pointer;
   margin: 0 9px;
   overflow: hidden;
   word-wrap: break-word;
-  height: 30px;
+  height: 28px;
 }
 ul.mailtip li:last-child {
   border-radius: 0px 0px 10px 10px;
