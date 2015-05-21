@@ -24,18 +24,31 @@
       .box .info {
         color: #F00;
         padding: 10px;
-        box-shadow: 0 0 6px #CCC;
+        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
+      }
+      /* css3 sugar */
+      textarea,
+      input[type=text],
+      input[type=password] {
+        -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+      }
+      textarea:focus,
+      input[type=text]:focus,
+      input[type=password]:focus {
+        outline: none;
+        border: 1px solid rgba(82, 162, 235, .8);
+        box-shadow: 0 0 rgba(34, 25, 25, 0.15) inset, 0 0 rgba(255, 255, 255, 0.8), 0 0 6px rgba(82, 162, 235, 1);
       }
       #mailtip {
         width: 300px;
         padding: 10px;
         outline: none;
       }
-      #mailtip:focus {
-        box-shadow: 0 0 6px #CCC;
-      }
       ul.mailtip {
-        box-shadow: 0 0 6px #CCC;
+        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
       }
     </style>
   </head>
