@@ -21,6 +21,7 @@ ul.mailtip li:last-child {
   border-radius: 0px 0px 3px 3px;
 }
 ul.mailtip li.active {
+  color: #eb7350;
   background: #eaeaea;
 }
 ul.mailtip li.hover {
