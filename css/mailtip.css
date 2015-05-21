@@ -18,7 +18,7 @@ ul.mailtip li p {
   height: 28px;
 }
 ul.mailtip li:last-child {
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 3px 3px;
 }
 ul.mailtip li.active {
   background: #eaeaea;
