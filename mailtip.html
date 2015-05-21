@@ -24,18 +24,34 @@
       .box .info {
         color: #F00;
         padding: 10px;
-        box-shadow: 0 0 6px #CCC;
+        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
+        font: 13px/1.5 Microsoft Yahei, SimSun, serif;
       }
-      #mailtip {
-        width: 300px;
-        padding: 10px;
+      input[type=text] {
+        cursor: text; vertical-align: middle;
+        padding: 0 7px; width: 120px; height: 24px;
+        border: 1px solid #ccc; resize: none; line-height: 24px;
+        box-shadow: 2px 2px 3px #ededed inset; background: #ffffcd;
+        font-size: 13px; font-family: Microsoft Yahei, SimSun, sans-serif;
+      }
+      /* css3 sugar */
+      textarea,
+      input[type=text],
+      input[type=password] {
+        -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+        transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+      }
+      textarea:focus,
+      input[type=text]:focus,
+      input[type=password]:focus {
         outline: none;
-      }
-      #mailtip:focus {
-        box-shadow: 0 0 6px #CCC;
+        border: 1px solid rgba(82, 162, 235, .8);
+        box-shadow: 0 0 rgba(34, 25, 25, 0.15) inset, 0 0 rgba(255, 255, 255, 0.8), 0 0 6px rgba(82, 162, 235, 1);
       }
       ul.mailtip {
-        box-shadow: 0 0 6px #CCC;
+        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
       }
     </style>
   </head>
