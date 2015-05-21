@@ -1,66 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>mailtip</title>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-        <script type="text/javascript" src="./src/jquery-1.8.3.js"></script>
-        <script type="text/javascript" src="./src/jquery.mailtip.js"></script>
-        <link type="text/css" rel="stylesheet" href="./css/mailtip.css"/>
-        <style type="text/css">
-            html, body, div, ul, li {
-                margin: 0;
-                padding: 0;
-            }
-
-            .box {
-                width: 960px;
-                height: 100px;
-                margin: 100px auto;
-            }
-
-            .box div {
-                width: 960px;
-                height: 50px;
-                text-align: center;
-            }
-
-            .box .info {
-                color: #F00;
-                padding: 10px;
-                box-shadow: 0 0 6px #CCC;
-            }
-
-            #mailtip {
-                width: 300px;
-                padding: 10px;
-                outline: none;
-            }
-
-            #mailtip:focus {
-                box-shadow: 0 0 6px #CCC;
-            }
-
-            ul.mailtip {
-                box-shadow: 0 0 6px #CCC;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="box">
-            <div><span class="info">您还未选择邮箱</span></div>
-            <div>
-                <input id="mailtip" type="text"/>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(function (){
-                var info = $('.info');
-                $('#mailtip').mailtip({
-                    afterselect: function (mail){
-                        info.text('您选择了邮箱：' + mail)
-                    }
-                });
-            });
-        </script>
-    </body>
+  <head>
+    <title>mailtip</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="./src/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="./src/jquery.mailtip.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/mailtip.css"/>
+    <style type="text/css">
+      html, body, div, ul, li {
+        margin: 0;
+        padding: 0;
+      }
+      .box {
+        width: 960px;
+        height: 100px;
+        margin: 100px auto;
+      }
+      .box div {
+        width: 960px;
+        height: 50px;
+        text-align: center;
+      }
+      .box .info {
+        color: #F00;
+        padding: 10px;
+        box-shadow: 0 0 6px #CCC;
+      }
+      #mailtip {
+        width: 300px;
+        padding: 10px;
+        outline: none;
+      }
+      #mailtip:focus {
+        box-shadow: 0 0 6px #CCC;
+      }
+      ul.mailtip {
+        box-shadow: 0 0 6px #CCC;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div><span class="info">您还未选择邮箱</span></div>
+      <div>
+        <input id="mailtip" type="text"/>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(function (){
+        var info = $('.info');
+        $('#mailtip').mailtip({
+          afterselect: function (mail){
+            info.text('您选择了邮箱：' + mail)
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
