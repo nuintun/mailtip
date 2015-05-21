@@ -22,7 +22,7 @@ ul.mailtip li:last-child {
 }
 ul.mailtip li.active {
   color: #eb7350;
-  background: #e7f6ff;
+  background: #eaeaea;
 }
 ul.mailtip li.hover {
   background: #e7f6ff;
