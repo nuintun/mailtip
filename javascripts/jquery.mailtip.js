@@ -2,7 +2,7 @@
  * Mail autocomplete
  * Author: nuintun
  * $(selector).mailtip({
- *   mails: [], // email domain list
+ *   mails: [], // mails
  *   onselected： function(mail){}, // callback on selected
  *   width: 'auto', // popup tip's width
  *   offsetTop: -1, // offset top relative default position
@@ -126,20 +126,25 @@
    * @returns {*}
    */
   function createLists(value, mails){
+    var arr;
+    var regx;
     var lists = '';
     var hasAt = /@/.test(value);
 
     if (hasAt) {
-      var arr = value.split('@');
+      arr = value.split('@');
+
       if (arr.length > 2) return lists;
+
       value = arr[0];
-      var regx = parseRegExp('@' + arr[1], 'i');
+      regx = parseRegExp('@' + arr[1], 'i');
     }
 
     value = hasAt ? value.split('@')[0] : value;
 
     for (var i = 0, len = mails.length; i < len; i++) {
       if (hasAt && !regx.test(mails[i])) continue;
+
       lists += '<li title="' + value + mails[i]
         + '" style="margin: 0; padding: 0; float: none;"><p>'
         + value + '@' + mails[i] + '</p></li>';
