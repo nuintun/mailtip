@@ -2,14 +2,17 @@
  * Mail autocomplete
  * Author: nuintun
  * $(selector).mailtip({
- *   mails: [], // mails
+ *   mails: [], // email domain list
  *   onselected： function(mail){}, // callback on selected
- *   width: 300, // tip's width
- *   offsetTop: 0, // offset top relative default position
+ *   width: 'auto', // popup tip's width
+ *   offsetTop: -1, // offset top relative default position
  *   offsetLeft: 0, // offset left relative default position
- *   zIndex: 1000 // z-index
+ *   zIndex: 10 // z-index
  * });
  */
+
+'use strict';
+
 (function ($){
   // is ie 9
   var ISIE9 = /MSIE 9.0/i.test(window.navigator.userAgent);
