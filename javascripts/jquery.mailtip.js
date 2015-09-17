@@ -145,7 +145,7 @@
     for (var i = 0, len = mails.length; i < len; i++) {
       if (hasAt && !regx.test(mails[i])) continue;
 
-      lists += '<li title="' + value + mails[i]
+      lists += '<li title="' + value + '@' + mails[i]
         + '" style="margin: 0; padding: 0; float: none;"><p>'
         + value + '@' + mails[i] + '</p></li>';
     }
