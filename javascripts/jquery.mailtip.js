@@ -20,8 +20,12 @@
   var INVALIDMAILRE = /[,]|[\u4e00-\u9fa5]|\s|^@/;
   // is support oninput event
   var hasInputEvent = 'oninput' in document.createElement('input');
+  // browser info
+  var browserInfo = window.navigator.appVersion || window.navigator.userAgent;
   // is ie 9
-  var ISIE9 = /MSIE 9.0/i.test(window.navigator.appVersion || window.navigator.userAgent);
+  var ISIE9 = /MSIE 9.0/i.test(browserInfo);
+  // is win10 edge
+  var ISEDGE = /Edge\//i.test(browserInfo);
 
   /**
    * is a number
@@ -231,54 +235,69 @@
       // tip
       var tip = createTip(input, config);
 
-      // binding event
-      input.on('keydown input propertychange', function (e){
-        if (e.type === 'keydown') {
-          switch (e.keyCode) {
-            // backspace
-            case 8:
+      // binding key down event
+      input.on('keydown', function (e){
+        switch (e.keyCode) {
+          // backspace
+          case 8:
+            // shit! win10 edge do not trigger input event when delete the last char
+            if (ISEDGE && this.value.length === 1) {
+              tip.hide();
+            } else if (ISIE9) {
               // shit! ie9 input event has a bug, backspace do not trigger input event
-              ISIE9 && input.trigger('input');
-              break;
-            case 9:
-              tip.hide();
-              break;
-            // up
-            case 38:
-              changeActive(tip, true);
-              break;
-            // down
-            case 40:
-              changeActive(tip);
-              break;
-            // enter
-            case 13:
-              if (tip.css('display') === 'none') return;
+              input.trigger('input');
+            }
+            break;
+          // tab
+          case 9:
+            tip.hide();
+            break;
+          // up
+          case 38:
+            changeActive(tip, true);
+            break;
+          // down
+          case 40:
+            changeActive(tip);
+            break;
+          // enter
+          case 13:
+            if (tip.css('display') === 'none') return;
 
-              e.preventDefault();
+            e.preventDefault();
 
-              var mail = tip.find('li.active').attr('title');
+            var mail = tip.find('li.active').attr('title');
 
-              tip.hide();
-              input.val(mail).focus();
-              config.onselected.call(input[0], mail);
-              break;
-            default:
-              break;
-          }
-        } else {
-          if (hasInputEvent) {
-            toggleTip(input.val(), tip, config.mails);
-          } else if (e.originalEvent.propertyName === 'value') {
-            toggleTip(input.val(), tip, config.mails);
-          }
+            tip.hide();
+            input.val(mail).focus();
+            config.onselected.call(this, mail);
+            break;
+          default:
+            break;
         }
       });
 
+      // binding input or propertychange event
+      if (hasInputEvent) {
+        input.on('input', function (){
+          toggleTip(this.value, tip, config.mails);
+        });
+      } else {
+        input.on('propertychange', function (e){
+          if (e.originalEvent.propertyName === 'value') {
+            toggleTip(this.val(), tip, config.mails);
+          }
+        });
+      }
+
       // shit! ie9 input event has a bug, backspace do not trigger input event
-      ISIE9 && input.on('keyup', function (e){
-        e.keyCode === 8 && toggleTip(input.val(), tip, config.mails);
-      });
+      if (ISIE9) {
+        input.on('keyup', function (e){
+          if (e.keyCode === 8) {
+            toggleTip(this.val(), tip, config.mails);
+          }
+        });
+      }
     });
   };
 }(jQuery));
