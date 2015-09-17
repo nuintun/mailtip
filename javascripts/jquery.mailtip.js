@@ -7,7 +7,7 @@
  *   width: 'auto', // popup tip's width
  *   offsetTop: -1, // offset top relative default position
  *   offsetLeft: 0, // offset left relative default position
- *   zIndex: 10 // z-index
+ *   zIndex: 10 // popup tip's z-index
  * });
  */
 
