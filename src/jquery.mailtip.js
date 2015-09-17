@@ -18,10 +18,10 @@
   var IMPRE = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/gm;
   // invalid mail char test regexp
   var INVALIDMAILRE = /[,]|[\u4e00-\u9fa5]|\s|^@/;
-  // is ie 9
-  var ISIE9 = /MSIE 9.0/i.test(window.navigator.userAgent);
   // is support oninput event
   var hasInputEvent = 'oninput' in document.createElement('input');
+  // is ie 9
+  var ISIE9 = /MSIE 9.0/i.test(window.navigator.appVersion || window.navigator.userAgent);
 
   /**
    * is a number
