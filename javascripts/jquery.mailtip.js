@@ -140,8 +140,6 @@
       regx = parseRegExp(arr[1], 'i');
     }
 
-    value = hasAt ? value.split('@')[0] : value;
-
     for (var i = 0, len = mails.length; i < len; i++) {
       if (hasAt && !regx.test(mails[i])) continue;
 
