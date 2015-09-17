@@ -4,12 +4,15 @@
  * $(selector).mailtip({
  *   mails: [], // mails
  *   onselected： function(mail){}, // callback on selected
- *   width: 300, // tip's width
+ *   width: 'auto', // tip's width
  *   offsetTop: 0, // offset top relative default position
  *   offsetLeft: 0, // offset left relative default position
- *   zIndex: 1000 // z-index
+ *   zIndex: 10 // z-index
  * });
  */
+
+'use strict';
+
 (function ($){
   // is ie 9
   var ISIE9 = /MSIE 9.0/i.test(window.navigator.userAgent);
