@@ -242,8 +242,7 @@
           case 8:
             // shit! win10 edge do not trigger input event when delete the last char
             if (ISEDGE && this.value.length === 1) {
-              input.val('');
-              input.trigger('input');
+              tip.hide();
             } else if (ISIE9) {
               // shit! ie9 input event has a bug, backspace do not trigger input event
               input.trigger('input');
