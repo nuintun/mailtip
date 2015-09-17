@@ -13,7 +13,7 @@ $(function (){
   
   $('#mailtip').mailtip({
     onselected: function (mail){
-      info.text('you choose email: ' + mail)
+      info.text('you choosed email: ' + mail)
     }
   });
 });
