@@ -17,7 +17,7 @@ ul.mailtip:after {
 }
 ul.mailtip li p {
   height: 28px;
-  text-align: left;
+  text-align: inherit;
   line-height: 28px;
   cursor: pointer;
   margin: 0 9px;
