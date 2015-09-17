@@ -36,9 +36,11 @@
    */
   function parseRegExp(pattern, attributes){
     var imp = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/igm;
+
     pattern = pattern.replace(imp, function (match){
       return '\\' + match;
     });
+
     return new RegExp(pattern, attributes);
   }
 
@@ -124,20 +126,25 @@
    * @returns {*}
    */
   function createLists(value, mails){
+    var arr;
+    var regx;
     var lists = '';
     var hasAt = /@/.test(value);
 
     if (hasAt) {
-      var arr = value.split('@');
+      arr = value.split('@');
+
       if (arr.length > 2) return lists;
+
       value = arr[0];
-      var regx = parseRegExp('@' + arr[1], 'i');
+      regx = parseRegExp('@' + arr[1], 'i');
     }
 
     value = hasAt ? value.split('@')[0] : value;
 
     for (var i = 0, len = mails.length; i < len; i++) {
       if (hasAt && !regx.test(mails[i])) continue;
+
       lists += '<li title="' + value + mails[i]
         + '" style="margin: 0; padding: 0; float: none;"><p>'
         + value + '@' + mails[i] + '</p></li>';
@@ -236,21 +243,17 @@
             case 8:
               // shit! ie9 input event has a bug, backspace do not trigger input event
               ISIE9 && input.trigger('input');
-
               break;
             case 9:
               tip.hide();
-
               break;
             // up
             case 38:
               changeActive(tip, true);
-
               break;
             // down
             case 40:
               changeActive(tip);
-
               break;
             // enter
             case 13:
@@ -263,7 +266,6 @@
               tip.hide();
               input.val(mail).focus();
               config.onselected.call(input[0], mail);
-
               break;
             default:
               break;
