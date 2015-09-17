@@ -126,20 +126,20 @@
    */
   function createLists(value, mails){
     var mail;
-    var regx;
+    var display;
     var lists = '';
     var atIndex = value.indexOf('@');
     var hasAt = atIndex !== -1;
 
     if (hasAt) {
-      regx = new RegExp('^' + escapeText(value.substring(atIndex + 1)), 'i');
+      display = new RegExp('^' + escapeText(value.substring(atIndex + 1)), 'i');
       value = value.substring(0, atIndex);
     }
 
     for (var i = 0, len = mails.length; i < len; i++) {
       mail = mails[i];
 
-      if (hasAt && !regx.test(mail)) continue;
+      if (hasAt && !display.test(mail)) continue;
 
       lists += '<li title="' + value + '@' + mail
         + '" style="margin: 0; padding: 0; float: none;"><p>'
