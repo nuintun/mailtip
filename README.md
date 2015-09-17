@@ -37,7 +37,7 @@ $(function (){
 > The offset left relative default position
 
 - *zIndex*
-> z-index of tip
+> z-index of popup tip
 
 
 ###Live Demo
