@@ -36,9 +36,11 @@
    */
   function parseRegExp(pattern, attributes){
     var imp = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/igm;
+
     pattern = pattern.replace(imp, function (match){
       return '\\' + match;
     });
+
     return new RegExp(pattern, attributes);
   }
 
@@ -236,21 +238,17 @@
             case 8:
               // shit! ie9 input event has a bug, backspace do not trigger input event
               ISIE9 && input.trigger('input');
-
               break;
             case 9:
               tip.hide();
-
               break;
             // up
             case 38:
               changeActive(tip, true);
-
               break;
             // down
             case 40:
               changeActive(tip);
-
               break;
             // enter
             case 13:
@@ -263,7 +261,6 @@
               tip.hide();
               input.val(mail).focus();
               config.onselected.call(input[0], mail);
-
               break;
             default:
               break;
