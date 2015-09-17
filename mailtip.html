@@ -3,9 +3,9 @@
   <head>
     <title>mailtip</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <link type="text/css" rel="stylesheet" href="./stylesheets/mailtip.css"/>
-    <script type="text/javascript" src="./javascripts/jquery-1.11.3.js"></script>
-    <script type="text/javascript" src="./javascripts/jquery.mailtip.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/mailtip.css"/>
+    <script type="text/javascript" src="./src/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="./src/jquery.mailtip.js"></script>
     <style type="text/css">
       html, body, div, ul, li {
         margin: 0;
@@ -35,6 +35,9 @@
       input[type=text]:focus {
         border: 1px solid rgba(82, 162, 235, .8);
       }
+      ul.mailtip {
+        max-width: 360px;
+      }
     </style>
   </head>
   <body>
@@ -47,7 +50,7 @@
     <script type="text/javascript">
       $(function (){
         var info = $('.info');
-
+        
         $('#mailtip').mailtip({
           onselected: function (mail){
             info.text('you choose email: ' + mail)
