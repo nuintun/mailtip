@@ -4,6 +4,7 @@ ul.mailtip {
   list-style: none;
   border: 1px solid #ccc;
   overflow: hidden;
+  text-align: left;
   font: 13px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
 ul.mailtip:after {
