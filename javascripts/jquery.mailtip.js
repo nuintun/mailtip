@@ -14,6 +14,10 @@
 'use strict';
 
 (function ($){
+  // escape text regexp
+  var IMPRE = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/gm;
+  // invalid mail char test regexp
+  var INVALIDMAILRE = /[,]|[\u4e00-\u9fa5]|\s|^@/;
   // is ie 9
   var ISIE9 = /MSIE 9.0/i.test(window.navigator.userAgent);
   // is support oninput event
@@ -21,27 +25,22 @@
 
   /**
    * is a number
-   * @param val
+   * @param value
    * @returns {boolean}
    */
-  function isNumber(val){
-    return typeof val === 'number' && isFinite(val);
+  function isNumber(value){
+    return typeof value === 'number' && isFinite(value);
   }
 
   /**
-   * parse string to regexp
-   * @param pattern
-   * @param attributes
-   * @returns {RegExp}
+   * escape text
+   * @param text
+   * @returns {string}
    */
-  function parseRegExp(pattern, attributes){
-    var imp = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/igm;
-
-    pattern = pattern.replace(imp, function (match){
+  function escapeText(text){
+    return text.replace(IMPRE, function (match){
       return '\\' + match;
     });
-
-    return new RegExp(pattern, attributes);
   }
 
   /**
@@ -126,26 +125,25 @@
    * @returns {*}
    */
   function createLists(value, mails){
-    var arr;
-    var regx;
+    var mail;
+    var display;
     var lists = '';
-    var hasAt = /@/.test(value);
+    var atIndex = value.indexOf('@');
+    var hasAt = atIndex !== -1;
 
     if (hasAt) {
-      arr = value.split('@');
-
-      if (arr.length > 2) return lists;
-
-      value = arr[0];
-      regx = parseRegExp('^' + arr[1], 'i');
+      display = new RegExp('^' + escapeText(value.substring(atIndex + 1)), 'i');
+      value = value.substring(0, atIndex);
     }
 
     for (var i = 0, len = mails.length; i < len; i++) {
-      if (hasAt && !regx.test(mails[i])) continue;
+      mail = mails[i];
 
-      lists += '<li title="' + value + '@' + mails[i]
+      if (hasAt && !display.test(mail)) continue;
+
+      lists += '<li title="' + value + '@' + mail
         + '" style="margin: 0; padding: 0; float: none;"><p>'
-        + value + '@' + mails[i] + '</p></li>';
+        + value + '@' + mail + '</p></li>';
     }
 
     return lists.replace(/^<li([^>]*)>/, '<li$1 class="active">');
@@ -179,17 +177,17 @@
 
   /**
    * toggle tip
-   * @param val
+   * @param value
    * @param tip
    * @param mails
    */
-  function toggleTip(val, tip, mails){
+  function toggleTip(value, tip, mails){
     // if input text is empty or has space char, chinese char, comma or begin with @ or more than two @, hide tip
     //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
-    if (!val || /[,]|[\u4e00-\u9fa5]|\s|^@/.test(val) || val.split('@').length > 2) {
+    if (!value || INVALIDMAILRE.test(value) || value.indexOf('@') !== value.lastIndexOf('@')) {
       tip.hide();
     } else {
-      var lists = createLists(val, mails);
+      var lists = createLists(value, mails);
 
       // if has match mails show tip
       if (lists) {
