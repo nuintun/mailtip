@@ -22,7 +22,7 @@ $(function (){
 ### API
 ###### options
 - *mails*
-> The mail list
+> The email domain list
 
 - *width*
 > The pupup tip's width, if set ```input``` the tip's width will equal input width else the width will equal set or auto

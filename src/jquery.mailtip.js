@@ -137,7 +137,7 @@
       if (hasAt && !regx.test(mails[i])) continue;
       lists += '<li title="' + value + mails[i]
         + '" style="margin: 0; padding: 0; float: none;"><p>'
-        + value + mails[i] + '</p></li>';
+        + value + '@' + mails[i] + '</p></li>';
     }
 
     return lists.replace(/^<li([^>]*)>/, '<li$1 class="active">');
@@ -200,10 +200,10 @@
   $.fn.mailtip = function (config){
     var defaults = {
       mails: [
-        '@qq.com', '@163.com', '@sina.com',
-        '@gmail.com', '@126.com', '@139.com',
-        '@189.com', '@sohu.com', '@msn.com',
-        '@hotmail.com', '@yahoo.com', '@yahoo.com.cn'
+        'qq.com', '163.com', 'sina.com',
+        'gmail.com', '126.com', '139.com',
+        '189.com', 'sohu.com', 'msn.com',
+        'hotmail.com', 'yahoo.com', 'yahoo.com.cn'
       ],
       onselected: $.noop,
       width: 'auto',
