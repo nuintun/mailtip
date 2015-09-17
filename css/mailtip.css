@@ -25,9 +25,6 @@ ul.mailtip li p {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-ul.mailtip li:last-child {
-  border-radius: 0 0 3px 3px;
-}
 ul.mailtip li.active {
   color: #eb7350;
   background: #eaeaea;
