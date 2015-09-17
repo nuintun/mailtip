@@ -46,17 +46,75 @@
 </blockquote>
 
 <h3>
+<a id="required" class="anchor" href="#required" aria-hidden="true"><span class="octicon octicon-link"></span></a>Required</h3>
+
+<blockquote>
+<p>jQuery &gt;= 1.7</p>
+</blockquote>
+
+<h3>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
 
-<div class="highlight highlight-js"><pre>$(<span class="pl-k">function</span> (){
+<div class="highlight highlight-source-js"><pre>$(<span class="pl-k">function</span> (){
   <span class="pl-k">var</span> info <span class="pl-k">=</span> $(<span class="pl-s"><span class="pl-pds">'</span>.info<span class="pl-pds">'</span></span>);
 
   $(<span class="pl-s"><span class="pl-pds">'</span>#mailtip<span class="pl-pds">'</span></span>).mailtip({
-    <span class="pl-en">afterselect</span>: <span class="pl-k">function</span> (<span class="pl-smi">mail</span>){
+    <span class="pl-en">onselected</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">mail</span>){
       info.<span class="pl-c1">text</span>(<span class="pl-s"><span class="pl-pds">'</span>您选择了邮箱：<span class="pl-pds">'</span></span> <span class="pl-k">+</span> mail)
     }
   });
 });</pre></div>
+
+<h3>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h3>
+
+<h6>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>options</h6>
+
+<ul>
+<li>
+<p><em>mails</em></p>
+
+<blockquote>
+<p>The mail list</p>
+</blockquote>
+</li>
+<li>
+<p><em>width</em></p>
+
+<blockquote>
+<p>The pupup tip's width, if set <code>input</code> the tip's width will equal input width else the width will equal set or auto</p>
+</blockquote>
+</li>
+<li>
+<p><em>onselected</em></p>
+
+<blockquote>
+<p>The callbacl on selected a mail</p>
+</blockquote>
+</li>
+<li>
+<p><em>offsetTop</em></p>
+
+<blockquote>
+<p>The offset top relative default position</p>
+</blockquote>
+</li>
+<li>
+<p><em>offsetLeft</em></p>
+
+<blockquote>
+<p>The offset left relative default position</p>
+</blockquote>
+</li>
+<li>
+<p><em>zIndex</em></p>
+
+<blockquote>
+<p>z-index of tip</p>
+</blockquote>
+</li>
+</ul>
 
 <h3>
 <a id="live-demo" class="anchor" href="#live-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live Demo</h3>
