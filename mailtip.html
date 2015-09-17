@@ -3,9 +3,9 @@
   <head>
     <title>mailtip</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <script type="text/javascript" src="./src/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="./src/jquery.mailtip.js"></script>
     <link type="text/css" rel="stylesheet" href="./css/mailtip.css"/>
+    <script type="text/javascript" src="./src/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="./src/jquery.mailtip.js"></script>
     <style type="text/css">
       html, body, div, ul, li {
         margin: 0;
@@ -22,42 +22,24 @@
         text-align: center;
       }
       .box .info {
-        color: #F00;
+        color: #f00;
         padding: 10px;
-        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
         font: 13px/1.5 Microsoft Yahei, SimSun, serif;
       }
       input[type=text] {
         cursor: text; vertical-align: middle;
-        padding: 0 7px; width: 120px; height: 24px;
+        padding: 0 7px; width: 120px; height: 24px; outline: none;
         border: 1px solid #ccc; resize: none; line-height: 24px;
-        box-shadow: 2px 2px 3px #ededed inset; background: #ffffcd;
         font-size: 13px; font-family: Microsoft Yahei, SimSun, sans-serif;
       }
-      /* css3 sugar */
-      textarea,
-      input[type=text],
-      input[type=password] {
-        -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
-        -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
-        -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
-        transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
-      }
-      textarea:focus,
-      input[type=text]:focus,
-      input[type=password]:focus {
-        outline: none;
+      input[type=text]:focus {
         border: 1px solid rgba(82, 162, 235, .8);
-        box-shadow: 0 0 rgba(34, 25, 25, 0.15) inset, 0 0 rgba(255, 255, 255, 0.8), 0 0 6px rgba(82, 162, 235, 1);
-      }
-      ul.mailtip {
-        box-shadow: 0 0 6px rgba(82, 162, 235, 1);
       }
     </style>
   </head>
   <body>
     <div class="box">
-      <div><span class="info">您还未选择邮箱</span></div>
+      <div><span class="info">please choose email !</span></div>
       <div>
         <input id="mailtip" type="text"/>
       </div>
@@ -65,9 +47,10 @@
     <script type="text/javascript">
       $(function (){
         var info = $('.info');
+
         $('#mailtip').mailtip({
-          afterselect: function (mail){
-            info.text('您选择了邮箱：' + mail)
+          onselected: function (mail){
+            info.text('you choose email: ' + mail)
           }
         });
       });
