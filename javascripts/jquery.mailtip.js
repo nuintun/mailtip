@@ -1,26 +1,36 @@
 /**
- * 邮件输入自动提示插件
- * author Newton
+ * Mail autocomplete
+ * Author: nuintun
  * $(selector).mailtip({
- *    mails: [], 需要提示的邮箱列表
- *    afterselect： function(mail){}, 选择后的回调，this指向文本元素，并传入当前选择的邮箱
- *    width: null, 提示框的宽度，如果传值则为所传入的值，否则为自动和文本框等宽
- *    offsettop: 0, 相对于默认向上偏移量
- *    offsetleft: 0, 相对于默认向上偏移量
- *    zindex: 1000 z-index值
+ *    mails: [], // mails
+ *    onselected： function(mail){}, // callback on selected
+ *    width: 300, // tip's width
+ *    offsetTop: 0, // offset top relative default position
+ *    offsetLeft: 0, // offset left relative default position
+ *    zIndex: 1000 // z-index
  * });
- * css style
- * ul.mailtip{float: none;background-color: #fcfeff;list-style: none;border:1px solid #97bccc;border-radius: 0px 0px 10px 10px;overflow: hidden; border-top: none;}
- * ul.mailtip li p{text-align: left;line-height: 30px;cursor: pointer; margin: 0 9px; overflow: hidden; word-wrap: break-word; height: 30px;}
- * ul.mailtip li:last-child{border-radius: 0px 0px 10px 10px;}
- * ul.mailtip li.active{background: #eaeaea;}
- * ul.mailtip li.hover{background: #e7f6ff;}
  */
 (function ($){
-  //探测oninput事件支持
-  var hasInputEvent = 'oninput' in document.createElement('input'),
-    ISIE9 = /MSIE 9.0;/i.test(navigator.appVersion || '');
-  //字符串转正则函数
+  // is ie 9
+  var ISIE9 = /MSIE 9.0/i.test(window.navigator.userAgent);
+  // is support oninput event
+  var hasInputEvent = 'oninput' in document.createElement('input');
+
+  /**
+   * is a number
+   * @param val
+   * @returns {boolean}
+   */
+  function isNumber(val){
+    return typeof val === 'number' && isFinite(val);
+  }
+
+  /**
+   * parse string to regexp
+   * @param pattern
+   * @param attributes
+   * @returns {RegExp}
+   */
   function parseRegExp(pattern, attributes){
     var imp = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/igm;
     pattern = pattern.replace(imp, function (match){
@@ -29,53 +39,72 @@
     return new RegExp(pattern, attributes);
   }
 
-  //创建提示条
-  var createTip = function (input, config){
+  /**
+   * create popup tip
+   * @param input
+   * @param config
+   * @returns {*}
+   */
+  function createTip(input, config){
     var tip = null;
-    //只在第一次按键时生成列表
+
+    // only create tip and binding event once
     if (!input.data('data-mailtip')) {
       var wrap = input.parent();
-      //如果外层控件没有设置定位，就去给外层设置相对定位。
+
+      // set parent node position
       !/absolute|relative/i.test(wrap.css('position')) && wrap.css('position', 'relative');
-      //关闭自动完成
+      // off input autocomplete
       input.attr('autocomplete', 'off');
 
       var offset = input.offset();
       var wrapOffset = wrap.offset();
 
-      tip = $('<ul class="mailtip" style="display: none; float: none; position:absolute; margin: 0; padding: 0; z-index: ' + config.zindex + '"></ul>');
+      tip = $('<ul class="mailtip" style="display: none; float: none; '
+        + 'position:absolute; margin: 0; padding: 0; z-index: '
+        + config.zIndex + '"></ul>');
 
-      //放入DOM树
+      // insert tip after input
       input.after(tip);
 
+      // set tip style
       tip.css({
-        top: offset.top - wrapOffset.top + input.outerHeight() + config.offsettop,
-        left: offset.left - wrapOffset.left + config.offsetleft,
-        width: config.width || input.outerWidth() - tip.outerWidth() + tip.width()
+        top: offset.top - wrapOffset.top + input.outerHeight() + config.offsetTop,
+        left: offset.left - wrapOffset.left + config.offsetLeft,
+        width: config.width === 'input' ? input.outerWidth() - tip.outerWidth() + tip.width() : config.width
       });
 
-      //绑定鼠标事件
-      tip.delegate('li', 'mouseenter mouseleave click', function (e){
+      // when width is auto, set min width equal input width
+      if (config.width === 'auto') {
+        tip.css('min-width', input.outerWidth() - tip.outerWidth() + tip.width());
+      }
+
+      // binding event
+      tip.on('mouseenter mouseleave click', 'li', function (e){
+        var selected = $(this);
+
         switch (e.type) {
           case 'mouseenter':
-            $(this).addClass('hover');
+            selected.addClass('hover');
             break;
           case 'click':
-            var mail = $(this).attr('title');
+            var mail = selected.attr('title');
+
             input.val(mail).focus();
-            config.afterselect.call(input[0], mail);
+            config.onselected.call(input[0], mail);
             break;
           case 'mouseleave':
-            $(this).removeClass('hover');
+            selected.removeClass('hover');
             break;
           default:
             break;
         }
       });
 
-      //点击其它地方关闭提示框
-      $(document).bind('click', function (e){
+      // when on click if the target element not input, hide tip
+      $(document).on('click', function (e){
         if (e.target === input[0]) return;
+
         tip.hide();
       });
 
@@ -83,12 +112,18 @@
     }
 
     return tip || input.data('data-mailtip');
-  };
+  }
 
-  //创建提示列表项
-  var createLists = function (value, mails){
+  /**
+   * create mail list
+   * @param value
+   * @param mails
+   * @returns {*}
+   */
+  function createLists(value, mails){
     var lists = '';
     var hasAt = /@/.test(value);
+
     if (hasAt) {
       var arr = value.split('@');
       if (arr.length > 2) return lists;
@@ -100,100 +135,132 @@
 
     for (var i = 0, len = mails.length; i < len; i++) {
       if (hasAt && !regx.test(mails[i])) continue;
-      lists += '<li title="' + value + mails[i] + '" style="margin: 0; padding: 0; float: none;"><p>' + value + mails[i] + '</p></li>';
+      lists += '<li title="' + value + mails[i]
+        + '" style="margin: 0; padding: 0; float: none;"><p>'
+        + value + mails[i] + '</p></li>';
     }
 
     return lists.replace(/^<li([^>]*)>/, '<li$1 class="active">');
-  };
+  }
 
-  //改变列表激活状态
-  var changeActive = function (panle, up){
-    //如果提示框隐藏跳出执行
+  /**
+   * change list active state
+   * @param panle
+   * @param up
+   */
+  function changeActive(panle, up){
+    // if tip is visible do nothing
     if (panle.css('display') === 'none') return;
+
     var liActive = panle.find('li.active');
+
     if (up) {
       var liPrev = liActive.prev();
+
       liPrev = liPrev.length ? liPrev : panle.find('li:last');
       liActive.removeClass('active');
       liPrev.addClass('active');
     } else {
       var liNext = liActive.next();
+
       liNext = liNext.length ? liNext : panle.find('li:first');
       liActive.removeClass('active');
       liNext.addClass('active');
     }
-  };
+  }
 
-  //展示隐藏提示
-  var toggleTip = function (val, tip, mails){
+  /**
+   * toggle tip
+   * @param val
+   * @param tip
+   * @param mails
+   */
+  function toggleTip(val, tip, mails){
+    // if input text is empty or has space char, chinese char, comma or begin with @ or more than two @, hide tip
     //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
     if (!val || /[,]|[\u4e00-\u9fa5]|\s|^@/.test(val) || val.split('@').length > 2) {
       tip.hide();
     } else {
       var lists = createLists(val, mails);
-      //如果返回的有列表项展开提示，否则隐藏。
+
+      // if has match mails show tip
       if (lists) {
         tip.html(lists).show();
       } else {
         tip.hide();
       }
     }
-  };
+  }
 
-  //调用接口
+  /**
+   * exports
+   * @param config
+   * @returns {*}
+   */
   $.fn.mailtip = function (config){
     var defaults = {
-      mails: ['@qq.com', '@163.com', '@sina.com', '@gmail.com', '@126.com', '@139.com', '@189.com', '@sohu.com', '@msn.com', '@hotmail.com', '@yahoo.com', '@yahoo.com.cn'],
-      afterselect: $.noop,
-      width: null,
-      offsettop: 0,
-      offsetleft: 0,
-      zindex: 1000
+      mails: [
+        '@qq.com', '@163.com', '@sina.com',
+        '@gmail.com', '@126.com', '@139.com',
+        '@189.com', '@sohu.com', '@msn.com',
+        '@hotmail.com', '@yahoo.com', '@yahoo.com.cn'
+      ],
+      onselected: $.noop,
+      width: 'auto',
+      offsetTop: -1,
+      offsetLeft: 0,
+      zIndex: 10
     };
 
     config = $.extend({}, defaults, config);
-    config.afterselect = typeof config.afterselect === 'function' ? config.afterselect : defaults.afterselect;
-    config.width = typeof config.width === 'number' ? config.width : defaults.width;
-    config.offsettop = typeof config.offsettop === 'number' ? config.offsettop : defaults.offsettop;
-    config.offsetleft = typeof config.offsetleft === 'number' ? config.offsetleft : defaults.offsetleft;
-    config.zindex = typeof config.zindex === 'number' ? config.zindex : defaults.zindex;
+    config.zIndex = isNumber(config.zIndex) ? config.zIndex : defaults.zIndex;
+    config.offsetTop = isNumber(config.offsetTop) ? config.offsetTop : defaults.offsetTop;
+    config.offsetLeft = isNumber(config.offsetLeft) ? config.offsetLeft : defaults.offsetLeft;
+    config.onselected = $.isFunction(config.onselected) ? config.onselected : defaults.onselected;
+    config.width = config.width === 'input' || isNumber(config.width) ? config.width : defaults.width;
 
     return this.each(function (){
-      //缓存当前输入框对象
+      // input
       var input = $(this);
-      //初始提示框
+      // tip
       var tip = createTip(input, config);
 
-      //绑定事件
-      input.bind('keydown input propertychange', function (e){
+      // binding event
+      input.on('keydown input propertychange', function (e){
         if (e.type === 'keydown') {
-          //根据按键执行不同操作
           switch (e.keyCode) {
-            //退格键
+            // backspace
             case 8:
-              //妹哦！IE9以上input事件有BUG,退格键不会触发input事件，所以就有了这个hack！
-              if ($.browser.msie && $.browser.version >= 9) input.trigger('input');
+              // shit! ie9 input event has a bug, backspace do not trigger input event
+              ISIE9 && input.trigger('input');
+
               break;
             case 9:
               tip.hide();
+
               break;
-            //向上键
+            // up
             case 38:
               changeActive(tip, true);
+
               break;
-            //向下键
+            // down
             case 40:
               changeActive(tip);
+
               break;
-            //回车键
+            // enter
             case 13:
-              //如果提示框隐藏跳出执行
               if (tip.css('display') === 'none') return;
+
               e.preventDefault();
+
               var mail = tip.find('li.active').attr('title');
-              input.val(mail).focus();
+
               tip.hide();
-              config.afterselect.call(input[0], mail);
+              input.val(mail).focus();
+              config.onselected.call(input[0], mail);
+
               break;
             default:
               break;
@@ -207,7 +274,7 @@
         }
       });
 
-      //妹哦！IE9以上input事件有BUG,退格键不会触发input事件，所以就有了这个hack！
+      // shit! ie9 input event has a bug, backspace do not trigger input event
       ISIE9 && input.on('keyup', function (e){
         e.keyCode === 8 && toggleTip(input.val(), tip, config.mails);
       });
