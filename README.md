@@ -28,7 +28,7 @@ $(function (){
 > The pupup tip's width, if set ```input``` the tip's width will equal input width else the width will equal set or auto
 
 - *onselected*
-> The callbacl on selected a mail
+> The callback on selected a mail
 
 - *offsetTop*
 > The offset top relative default position
