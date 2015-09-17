@@ -137,7 +137,7 @@
       if (arr.length > 2) return lists;
 
       value = arr[0];
-      regx = parseRegExp(arr[1], 'i');
+      regx = parseRegExp('^' + arr[1], 'i');
     }
 
     for (var i = 0, len = mails.length; i < len; i++) {
