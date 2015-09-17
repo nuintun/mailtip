@@ -4,6 +4,7 @@ ul.mailtip {
   list-style: none;
   border: 1px solid #ccc;
   overflow: hidden;
+  text-align: left;
   font: 13px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
 ul.mailtip:after {
@@ -16,16 +17,13 @@ ul.mailtip:after {
 }
 ul.mailtip li p {
   height: 28px;
-  text-align: left;
+  text-align: inherit;
   line-height: 28px;
   cursor: pointer;
   margin: 0 9px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-ul.mailtip li:last-child {
-  border-radius: 0 0 3px 3px;
 }
 ul.mailtip li.active {
   color: #eb7350;
