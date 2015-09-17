@@ -13,7 +13,7 @@ $(function (){
   
   $('#mailtip').mailtip({
     onselected: function (mail){
-      info.text('您选择了邮箱：' + mail)
+      info.text('you choose email: ' + mail)
     }
   });
 });
