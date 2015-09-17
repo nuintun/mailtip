@@ -2,12 +2,12 @@
  * Mail autocomplete
  * Author: nuintun
  * $(selector).mailtip({
- *    mails: [], // mails
- *    onselected： function(mail){}, // callback on selected
- *    width: 300, // tip's width
- *    offsetTop: 0, // offset top relative default position
- *    offsetLeft: 0, // offset left relative default position
- *    zIndex: 1000 // z-index
+ *   mails: [], // mails
+ *   onselected： function(mail){}, // callback on selected
+ *   width: 300, // tip's width
+ *   offsetTop: 0, // offset top relative default position
+ *   offsetLeft: 0, // offset left relative default position
+ *   zIndex: 1000 // z-index
  * });
  */
 (function ($){
