@@ -14,10 +14,8 @@
 'use strict';
 
 (function ($){
-  // escape text regexp
-  var IMPRE = /[\^\.\\\|\(\)\*\+\-\$\[\]\?]/gm;
-  // invalid mail char test regexp
-  var INVALIDMAILRE = /[,]|[\u4e00-\u9fa5]|\s|^@/;
+  // email char test regexp
+  var EMAILRE = /[\u4e00-\u9fa5_a-zA-Z0-9]+@?/;
   // is support oninput event
   var hasInputEvent = 'oninput' in document.createElement('input');
   // browser info
@@ -34,17 +32,6 @@
    */
   function isNumber(value){
     return typeof value === 'number' && isFinite(value);
-  }
-
-  /**
-   * escape text
-   * @param text
-   * @returns {string}
-   */
-  function escapeText(text){
-    return text.replace(IMPRE, function (match){
-      return '\\' + match;
-    });
   }
 
   /**
@@ -130,20 +117,20 @@
    */
   function createLists(value, mails){
     var mail;
-    var display;
+    var domain;
     var lists = '';
     var atIndex = value.indexOf('@');
     var hasAt = atIndex !== -1;
 
     if (hasAt) {
-      display = new RegExp('^' + escapeText(value.substring(atIndex + 1)), 'i');
+      domain = value.substring(atIndex + 1);
       value = value.substring(0, atIndex);
     }
 
     for (var i = 0, len = mails.length; i < len; i++) {
       mail = mails[i];
 
-      if (hasAt && !display.test(mail)) continue;
+      if (hasAt && mail.indexOf(domain) !== 0) continue;
 
       lists += '<li title="' + value + '@' + mail
         + '" style="margin: 0; padding: 0; float: none;"><p>'
@@ -188,7 +175,7 @@
   function toggleTip(value, tip, mails){
     // if input text is empty or has space char, chinese char, comma or begin with @ or more than two @, hide tip
     //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
-    if (!value || INVALIDMAILRE.test(value) || value.indexOf('@') !== value.lastIndexOf('@')) {
+    if (!value || !EMAILRE.test(value) || value.indexOf('@') !== value.lastIndexOf('@')) {
       tip.hide();
     } else {
       var lists = createLists(value, mails);
