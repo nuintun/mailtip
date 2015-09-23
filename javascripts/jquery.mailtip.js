@@ -14,8 +14,8 @@
 'use strict';
 
 (function ($){
-  // email char test regexp
-  var EMAILRE = /[\u4e00-\u9fa5_a-zA-Z0-9]+@?/;
+  // invalid email char test regexp
+  var INVALIDEMAILRE = /[^\u4e00-\u9fa5_a-zA-Z0-9]/;
   // is support oninput event
   var hasInputEvent = 'oninput' in document.createElement('input');
   // is ie 9
@@ -170,9 +170,13 @@
    * @param mails
    */
   function toggleTip(tip, value, mails){
-    // if input text is empty or has space char, chinese char, comma or begin with @ or more than two @, hide tip
-    //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
-    if (!value || !EMAILRE.test(value) || value.indexOf('@') !== value.lastIndexOf('@')) {
+    var atIndex = value.indexOf('@');
+
+    // if input text is empty or has invalid char or begin with @ or more than two @, hide tip
+    if (!value
+      || atIndex === 0
+      || atIndex !== value.lastIndexOf('@')
+      || INVALIDEMAILRE.test(atIndex === -1 ? value : value.substring(0, atIndex))) {
       tip.hide();
     } else {
       var items = createItems(value, mails);
