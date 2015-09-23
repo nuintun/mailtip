@@ -249,8 +249,9 @@
 
             var mail = tip.find('li.active').attr('title');
 
-            tip.hide();
             input.val(mail).focus();
+            tip.hide();
+
             config.onselected.call(this, mail);
             break;
           default:
