@@ -110,15 +110,15 @@
   }
 
   /**
-   * create mail list
+   * create mail list item
    * @param value
    * @param mails
    * @returns {*}
    */
-  function createLists(value, mails){
+  function createItems(value, mails){
     var mail;
     var domain;
-    var lists = '';
+    var items = '';
     var atIndex = value.indexOf('@');
     var hasAt = atIndex !== -1;
 
@@ -132,57 +132,58 @@
 
       if (hasAt && mail.indexOf(domain) !== 0) continue;
 
-      lists += '<li title="' + value + '@' + mail
+      items += '<li title="' + value + '@' + mail
         + '" style="margin: 0; padding: 0; float: none;"><p>'
         + value + '@' + mail + '</p></li>';
     }
 
-    return lists.replace(/^<li([^>]*)>/, '<li$1 class="active">');
+    // active first item
+    return items.replace('<li', '<li class="active"');
   }
 
   /**
    * change list active state
-   * @param panle
+   * @param tip
    * @param up
    */
-  function changeActive(panle, up){
+  function changeActive(tip, up){
     // if tip is visible do nothing
-    if (panle.css('display') === 'none') return;
+    if (tip.css('display') === 'none') return;
 
-    var liActive = panle.find('li.active');
+    var itemActive = tip.find('li.active');
 
     if (up) {
-      var liPrev = liActive.prev();
+      var itemPrev = itemActive.prev();
 
-      liPrev = liPrev.length ? liPrev : panle.find('li:last');
-      liActive.removeClass('active');
-      liPrev.addClass('active');
+      itemPrev = itemPrev.length ? itemPrev : tip.find('li:last');
+      itemActive.removeClass('active');
+      itemPrev.addClass('active');
     } else {
-      var liNext = liActive.next();
+      var itemNext = itemActive.next();
 
-      liNext = liNext.length ? liNext : panle.find('li:first');
-      liActive.removeClass('active');
-      liNext.addClass('active');
+      itemNext = itemNext.length ? itemNext : tip.find('li:first');
+      itemActive.removeClass('active');
+      itemNext.addClass('active');
     }
   }
 
   /**
    * toggle tip
-   * @param value
    * @param tip
+   * @param value
    * @param mails
    */
-  function toggleTip(value, tip, mails){
+  function toggleTip(tip, value, mails){
     // if input text is empty or has space char, chinese char, comma or begin with @ or more than two @, hide tip
     //如果输入为空，带空格，中文字符，英文逗号，@开头，或者两个以上@直接隐藏提示
     if (!value || !EMAILRE.test(value) || value.indexOf('@') !== value.lastIndexOf('@')) {
       tip.hide();
     } else {
-      var lists = createLists(value, mails);
+      var items = createItems(value, mails);
 
       // if has match mails show tip
-      if (lists) {
-        tip.html(lists).show();
+      if (items) {
+        tip.html(items).show();
       } else {
         tip.hide();
       }
@@ -267,12 +268,12 @@
       // binding input or propertychange event
       if (hasInputEvent) {
         input.on('input', function (){
-          toggleTip(this.value, tip, config.mails);
+          toggleTip(tip, this.value, config.mails);
         });
       } else {
         input.on('propertychange', function (e){
           if (e.originalEvent.propertyName === 'value') {
-            toggleTip(this.val(), tip, config.mails);
+            toggleTip(tip, this.value, config.mails);
           }
         });
       }
@@ -281,7 +282,7 @@
       if (ISIE9) {
         input.on('keyup', function (e){
           if (e.keyCode === 8) {
-            toggleTip(this.val(), tip, config.mails);
+            toggleTip(tip, this.value, config.mails);
           }
         });
       }
