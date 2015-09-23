@@ -5,7 +5,7 @@ ul.mailtip {
   border: 1px solid #ccc;
   overflow: hidden;
   text-align: left;
-  font: 13px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
+  font: italic 13px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
 ul.mailtip:after {
   visibility: hidden;
