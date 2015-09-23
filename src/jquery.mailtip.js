@@ -18,12 +18,8 @@
   var EMAILRE = /[\u4e00-\u9fa5_a-zA-Z0-9]+@?/;
   // is support oninput event
   var hasInputEvent = 'oninput' in document.createElement('input');
-  // browser info
-  var browserInfo = window.navigator.appVersion || window.navigator.userAgent;
   // is ie 9
-  var ISIE9 = /MSIE 9.0/i.test(browserInfo);
-  // is win10 edge
-  var ISEDGE = /Edge\//i.test(browserInfo);
+  var ISIE9 = /MSIE 9.0/i.test(window.navigator.appVersion || window.navigator.userAgent);
 
   /**
    * is a number
@@ -228,11 +224,8 @@
         switch (e.keyCode) {
           // backspace
           case 8:
-            // shit! win10 edge do not trigger input event when delete the last char
-            if (ISEDGE && this.value.length === 1) {
-              tip.hide();
-            } else if (ISIE9) {
-              // shit! ie9 input event has a bug, backspace do not trigger input event
+            // shit! ie9 input event has a bug, backspace do not trigger input event
+            if (ISIE9) {
               input.trigger('input');
             }
             break;
