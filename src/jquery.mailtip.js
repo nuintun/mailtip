@@ -239,10 +239,12 @@
             break;
           // up
           case 38:
+            e.preventDefault();
             changeActive(tip, true);
             break;
           // down
           case 40:
+            e.preventDefault();
             changeActive(tip);
             break;
           // enter
