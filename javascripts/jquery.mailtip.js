@@ -143,9 +143,6 @@
    * @param up
    */
   function changeActive(tip, up){
-    // if tip is visible do nothing
-    if (tip.css('display') === 'none') return;
-
     var itemActive = tip.find('li.active');
 
     if (up) {
@@ -225,6 +222,9 @@
 
       // binding key down event
       input.on('keydown', function (e){
+        // if tip is visible do nothing
+        if (tip.css('display') === 'none') return;
+
         switch (e.keyCode) {
           // backspace
           case 8:
@@ -239,23 +239,22 @@
             break;
           // up
           case 38:
+            e.preventDefault();
             changeActive(tip, true);
             break;
           // down
           case 40:
+            e.preventDefault();
             changeActive(tip);
             break;
           // enter
           case 13:
-            if (tip.css('display') === 'none') return;
-
             e.preventDefault();
 
             var mail = tip.find('li.active').attr('title');
 
             input.val(mail).focus();
             tip.hide();
-
             config.onselected.call(this, mail);
             break;
           default:
