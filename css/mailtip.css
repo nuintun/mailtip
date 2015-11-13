@@ -1,4 +1,4 @@
-ul.mailtip {
+ul.ui-mailtip {
   zoom: 1; /* for IE6 IE7 clear float */
   background-color: #fff;
   list-style: none;
@@ -7,7 +7,7 @@ ul.mailtip {
   text-align: left;
   font: italic 13px/1.5 Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
-ul.mailtip:after {
+ul.ui-mailtip:after {
   visibility: hidden;
   display: block;
   font-size: 0;
@@ -15,7 +15,10 @@ ul.mailtip:after {
   clear: both;
   height: 0;
 }
-ul.mailtip li p {
+ul.ui-mailtip li {
+  margin: 0; padding: 0; float: none;
+}
+ul.ui-mailtip li p {
   height: 28px;
   text-align: inherit;
   line-height: 28px;
@@ -25,10 +28,10 @@ ul.mailtip li p {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-ul.mailtip li.active {
+ul.ui-mailtip li.active {
   color: #eb7350;
   background: #eaeaea;
 }
-ul.mailtip li.hover {
+ul.ui-mailtip li.hover {
   background: #e7f6ff;
 }

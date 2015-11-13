@@ -51,7 +51,7 @@
       var offset = input.offset();
       var wrapOffset = wrap.offset();
 
-      tip = $('<ul class="mailtip" style="display: none; float: none; '
+      tip = $('<ul class="ui-mailtip" style="display: none; float: none; '
         + 'position:absolute; margin: 0; padding: 0; z-index: '
         + config.zIndex + '"></ul>');
 
@@ -128,9 +128,7 @@
 
       if (hasAt && mail.indexOf(domain) !== 0) continue;
 
-      items += '<li title="' + value + '@' + mail
-        + '" style="margin: 0; padding: 0; float: none;"><p>'
-        + value + '@' + mail + '</p></li>';
+      items += '<li title="' + value + '@' + mail + '"><p>' + value + '@' + mail + '</p></li>';
     }
 
     // active first item
