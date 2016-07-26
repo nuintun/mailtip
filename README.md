@@ -41,4 +41,4 @@ $(function (){
 
 
 ###Live Demo
-[Click here see the live demo](http://nuintun.github.io/mailtip/mailtip.html)
+[Click here see the live demo](https://nuintun.github.io/mailtip/mailtip.html)
