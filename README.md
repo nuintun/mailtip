@@ -3,10 +3,10 @@ Mailtip
 
 >A jquery email autocomplete plugin
 
-###Required
+### Required
 >jQuery >= 1.7
 
-###Introduction
+### Introduction
 ```js
 $(function (){
   var info = $('.info');
@@ -40,5 +40,5 @@ $(function (){
 > z-index of popup tip
 
 
-###Live Demo
+### Live Demo
 [Click here see the live demo](https://nuintun.github.io/mailtip/mailtip.html)
